@@ -1,0 +1,13 @@
+@import "src/styles/colors";
+
+.navbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+  transition: 0.3s;
+  height: 8vh;
+  padding: 7px 5vw;
+  background: transparent;
+  box-sizing: border-box;
+}

@@ -1,0 +1,9 @@
+@import "src/styles/colors";
+.footer{
+  padding: 10vh 0;
+  display: flex;
+  justify-content: center;
+  color: $light-color;
+  background: url("https://designshack.net/wp-content/uploads/black-texture-background-368x245.jpg");
+  box-sizing: border-box;
+}

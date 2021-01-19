@@ -1,0 +1,19 @@
+@import "colors";
+.landing{
+  position: relative;
+  box-sizing: border-box;
+  .welcomeBanner{
+    position: relative;
+    height: calc(100vh - 50px);
+    margin-top: -10vh;
+    padding: 0;
+    background: $primary-color;
+    .welcomeBannerText{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-sizing: border-box;
+    }
+  }
+}
