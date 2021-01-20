@@ -14,29 +14,40 @@ const Dashboard = (pageProps) => {
             keywords={['js', "nextjs"]}
         >
             <div className={styles.dashboard}>
-               <section className={styles.userList}>
-                   {
-                       users.map((user, index) => (
-                           <div className="card mb-lg pa-md text-center" key={user._id}>
-                               <div>
-                                   {user.user_name}
-                               </div>
-                               <div>
-                                   {user.email}
-                               </div>
-                           </div>
-                       ))
-                   }
-               </section>
+                <section className={styles.userList}>
+                    {
+                        users.map((user, index) => (
+                            <div className="card mb-lg pa-md text-center" key={user._id}>
+                                <div>
+                                    {user.user_name}
+                                </div>
+                                <div>
+                                    {user.email}
+                                </div>
+                            </div>
+                        ))
+                    }
+                </section>
             </div>
         </Layout>
     );
 };
 
-Dashboard.getInitialProps = async () => {
+// Dashboard.getInitialProps = async () => {
+//     // const app_uri = process.env.APP_URI
+//     // console.log(app_uri)
+//     const res = await axios.get('http://localhost:3000/api/user');
+//     return {
+//         users: res.data.data
+//     }
+// }
+
+export async function getServerSideProps() {
     const res = await axios.get('http://localhost:3000/api/user');
     return {
-        users: res.data.data
+        props: {
+            users: res.data.data
+        }
     }
 }
 

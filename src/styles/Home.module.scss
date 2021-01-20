@@ -1,4 +1,5 @@
 @import "colors";
+@import "vars";
 .landing{
   position: relative;
   box-sizing: border-box;
@@ -15,5 +16,51 @@
       transform: translate(-50%, -50%);
       box-sizing: border-box;
     }
+  }
+}
+
+//PRODUCTS
+.products{
+  width: 100%;
+  box-sizing: border-box;
+  .productList{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
+    .productCard{
+      width: 21.5%;
+      margin-right: 3%;
+      margin-bottom: 3%;
+      box-sizing: border-box;
+      &:nth-child(4n){
+        margin-right: 0;
+      }
+      .productImg{
+        box-sizing: border-box;
+      }
+      .productDesc{
+        box-sizing: border-box;
+      }
+    }
+  }
+}
+
+//product details
+.productDetails{
+  box-sizing: border-box;
+  .productImages{
+    width: 40%;
+    display: flex;
+    background: $secondary-dark-color;
+    border-radius: $md;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  .productDescription{
+    flex: 1;
+    margin-left: $xl + $xl;
+    padding: $lg;
+    box-sizing: border-box;
   }
 }

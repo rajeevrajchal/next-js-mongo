@@ -10,4 +10,10 @@
   padding: 7px 5vw;
   background: transparent;
   box-sizing: border-box;
+
+  &.scrolled {
+    box-shadow: 0 4px 16px rgba(70, 71, 72, 0.7);
+    background: $light-color;
+    color: $dark-color;
+  }
 }
