@@ -1,5 +1,6 @@
 import {dbConnect} from "../../../../util/dbConnect";
 import User from "../../../model/user";
+import {hashPassword} from "../helper/authHelper";
 
 dbConnect();
 
@@ -21,8 +22,13 @@ export default async (req, res) => {
             break
         case "POST":
             try {
+                const userData = {
+                    email: req.body.email,
+                    user_name: req.body.user_name,
+                    password: await hashPassword(req.body.password)
+                }
                 const user = await User.create(
-                    req.body
+                    userData
                 );
                 res.status(200).json({
                     success: true,

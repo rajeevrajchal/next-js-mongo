@@ -5,7 +5,8 @@ import {useState, useEffect} from 'react'
 import dynamic from "next/dynamic";
 import PageLoader from "../../partials/pageLoader";
 import DataLoading from "../../partials/dataLoading";
-import { useForm } from "react-hook-form";
+import {useForm} from "react-hook-form";
+import {getAppCookies, verifyToken} from "../../middleware/auth";
 
 const Layout = dynamic(() => import("../../hoc/layout"),
     {loading: () => <PageLoader/>}
@@ -13,13 +14,14 @@ const Layout = dynamic(() => import("../../hoc/layout"),
 
 const User = (pageProps) => {
     const router = useRouter();
-    const { register, handleSubmit, watch, errors } = useForm();
+    const {register, handleSubmit, watch, errors} = useForm();
     const [loading, setLoading] = useState(true);
     const [isSubmit, setIsSubmit] = useState(false)
     const emailReg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const [value, setValues] = useState({
         user_name: '',
-        email:''
+        email: '',
+        password: ""
     })
     const {
         users
@@ -46,7 +48,8 @@ const User = (pageProps) => {
         if (res.status === 200) {
             setValues({
                 user_name: '',
-                email:''
+                email: '',
+                password: ''
             })
             setIsSubmit(false)
             refreshData();
@@ -102,7 +105,7 @@ const User = (pageProps) => {
                                     type="text"
                                     name="user_name"
                                     value={value.user_name}
-                                    ref={register({ required: true })}
+                                    ref={register({required: true})}
                                     placeholder="user_name"/>
                             </div>
                             <div className="form-error">
@@ -118,13 +121,29 @@ const User = (pageProps) => {
                                     name="email"
                                     value={value.email}
                                     ref={register({
-                                        required: true ,
+                                        required: true,
                                         pattern: emailReg
                                     })}
                                     placeholder="email"/>
                             </div>
                             <div className="form-error">
                                 {errors.email && "Email is required"}
+                            </div>
+                        </div>
+                        <div className="input-group">
+                            <div className="input-box">
+                                <input
+                                    onChange={(e) => handleChange(e)}
+                                    type="password"
+                                    name="password"
+                                    value={value.password}
+                                    ref={register({
+                                        required: true
+                                    })}
+                                    placeholder="password"/>
+                            </div>
+                            <div className="form-error capitalize">
+                                {errors.password && "password is required"}
                             </div>
                         </div>
                         <div className="input-group flex flex-centered">
@@ -148,13 +167,27 @@ const User = (pageProps) => {
 //     }
 // }
 
-export async function getServerSideProps() {
-    const res = await axios.get(`http://localhost:3000/api/user`);
+export async function getServerSideProps(context) {
+    const {req, res} = context;
+    const {token} = getAppCookies(req);
+    if (!token) {
+        res.setHeader("location", "/");
+        res.statusCode = 302;
+        res.end();
+        return {
+            props: {
+                users: []
+            },
+        };
+    }
+    const userList = await axios.get(`http://localhost:3000/api/user`);
     return {
         props: {
-            users: res.data.data
-        }
-    }
+            token,
+            users: userList.data.data
+        },
+    };
+
 }
 
 export default User;

@@ -10,8 +10,12 @@ const ProductCard = dynamic(() => import("../../shared/productCard"),
     {loading: () => <DataLoading/>}
 )
 
+import {
+    getAppCookies,
+    verifyToken
+} from '../../middleware/auth';
 
-const Product = () => {
+const Product = (pageProps) => {
     return (
         <Layout
             title={"Next TS:Products"}
@@ -44,3 +48,22 @@ const Product = () => {
 };
 
 export default Product;
+
+export async function getServerSideProps(context) {
+    const {req, res} = context;
+    const {token} = getAppCookies(req);
+    if(!token){
+        res.setHeader("location", "/");
+        res.statusCode = 302;
+        res.end();
+        return {
+            props: {
+                token
+            },
+        };
+    }
+    return {
+        props:{}
+    }
+}
+

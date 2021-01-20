@@ -4,6 +4,7 @@ import {useRouter} from 'next/router'
 import style from '../../styles/Home.module.scss'
 import styles from "../../styles/Home.module.scss";
 import Image from "next/image";
+import {getAppCookies, verifyToken} from "../../middleware/auth";
 
 const ProductDetail = () => {
     const router = useRouter()
@@ -60,3 +61,21 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
+
+export async function getServerSideProps(context) {
+    const {req, res} = context;
+    const {token} = getAppCookies(req);
+    if (!token) {
+        res.setHeader("location", "/");
+        res.statusCode = 302;
+        res.end();
+        return {
+            props: {},
+        };
+    }
+    return {
+        props: {
+            token
+        },
+    };
+}
