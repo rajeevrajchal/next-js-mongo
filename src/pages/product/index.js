@@ -1,6 +1,15 @@
-import Layout from "../../hoc/layout";
+import dynamic from 'next/dynamic'
 import styles from "../../styles/Home.module.scss"
-import ProductCard from "../../shared/productCard";
+import PageLoader from "../../partials/pageLoader";
+import DataLoading from "../../partials/dataLoading";
+
+const Layout = dynamic(() => import("../../hoc/layout"),
+    {loading: () => <PageLoader/>}
+)
+const ProductCard = dynamic(() => import("../../shared/productCard"),
+    {loading: () => <DataLoading/>}
+)
+
 
 const Product = () => {
     return (

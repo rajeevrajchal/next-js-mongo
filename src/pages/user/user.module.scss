@@ -1,0 +1,15 @@
+@import "src/styles/vars";
+.user {
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  .userList{
+    flex: 1;
+    box-sizing: border-box;
+  }
+  .userForm{
+    width: 40%;
+    margin-left: $xl;
+    box-sizing: border-box;
+  }
+}

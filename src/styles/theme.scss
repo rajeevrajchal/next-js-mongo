@@ -248,13 +248,17 @@ a {
       outline: none;
 
       &::placeholder {
-        color: $secondary-dark-color;
+        color: $dark-color;
       }
 
       &:focus {
         outline: none;
       }
     }
+  }
+  .form-error{
+    padding:$md 0 0 $md ;
+    color: $danger-color;
   }
 }
 

@@ -45,8 +45,8 @@ const Nav = () => {
                     </Link>
                 </div>
                 <div className="nav-menu-item capitalize sub-title bold mr-lg">
-                    <Link href={"/dashboard"}>
-                        Dashboard
+                    <Link href={"/user"}>
+                        User
                     </Link>
                 </div>
             </div>
