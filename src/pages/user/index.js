@@ -96,7 +96,7 @@ export async function getServerSideProps(context) {
             },
         };
     }
-    const userList = await axios.get(`http://localhost:3000/api/user`);
+    const userList = await axios.get(`https://demonextapp.herokuapp.com/api/user`);
     return {
         props: {
             token,
