@@ -5,7 +5,6 @@ import {useState, useEffect} from 'react'
 import dynamic from "next/dynamic";
 import PageLoader from "../../partials/pageLoader";
 import DataLoading from "../../partials/dataLoading";
-import {getAppCookies, verifyToken} from "../../middleware/auth";
 import Register from "../../shared/auth/register";
 
 const Layout = dynamic(() => import("../../hoc/layout"),
@@ -83,27 +82,14 @@ const User = (pageProps) => {
 //     }
 // }
 
-// export async function getServerSideProps(context) {
-//     const {req, res} = context;
-//     const {token} = getAppCookies(req);
-//     if (!token) {
-//         res.setHeader("location", "/");
-//         res.statusCode = 302;
-//         res.end();
-//         return {
-//             props: {
-//                 users: []
-//             },
-//         };
-//     }
-//     const userList = await axios.get(`http://localhost:3000/api/user`);
-//     return {
-//         props: {
-//             token,
-//             users: userList.data.data
-//         },
-//     };
-//
-// }
+export async function getServerSideProps() {
+    const userList = await axios.get(`http://localhost:3000/api/user`);
+    return {
+        props: {
+            users: userList.data.data
+        },
+    };
+
+}
 
 export default User;
