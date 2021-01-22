@@ -83,7 +83,7 @@ const User = (pageProps) => {
 // }
 
 export async function getServerSideProps() {
-    const userList = await axios.get(`http://localhost:3000/api/user`);
+    const userList = await axios.get(`https://demonextapp.herokuapp.com:3000/api/user`);
     return {
         props: {
             users: userList.data.data
