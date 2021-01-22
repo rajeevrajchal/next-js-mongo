@@ -83,27 +83,27 @@ const User = (pageProps) => {
 //     }
 // }
 
-export async function getServerSideProps(context) {
-    const {req, res} = context;
-    const {token} = getAppCookies(req);
-    if (!token) {
-        res.setHeader("location", "/");
-        res.statusCode = 302;
-        res.end();
-        return {
-            props: {
-                users: []
-            },
-        };
-    }
-    const userList = await axios.get(`http://localhost:3000/api/user`);
-    return {
-        props: {
-            token,
-            users: userList.data.data
-        },
-    };
-
-}
+// export async function getServerSideProps(context) {
+//     const {req, res} = context;
+//     const {token} = getAppCookies(req);
+//     if (!token) {
+//         res.setHeader("location", "/");
+//         res.statusCode = 302;
+//         res.end();
+//         return {
+//             props: {
+//                 users: []
+//             },
+//         };
+//     }
+//     const userList = await axios.get(`http://localhost:3000/api/user`);
+//     return {
+//         props: {
+//             token,
+//             users: userList.data.data
+//         },
+//     };
+//
+// }
 
 export default User;
