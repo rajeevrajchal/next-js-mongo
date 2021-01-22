@@ -5,8 +5,8 @@ import {useState, useEffect} from 'react'
 import dynamic from "next/dynamic";
 import PageLoader from "../../partials/pageLoader";
 import DataLoading from "../../partials/dataLoading";
-import {useForm} from "react-hook-form";
 import {getAppCookies, verifyToken} from "../../middleware/auth";
+import Register from "../../shared/auth/register";
 
 const Layout = dynamic(() => import("../../hoc/layout"),
     {loading: () => <PageLoader/>}
@@ -14,15 +14,7 @@ const Layout = dynamic(() => import("../../hoc/layout"),
 
 const User = (pageProps) => {
     const router = useRouter();
-    const {register, handleSubmit, watch, errors} = useForm();
     const [loading, setLoading] = useState(true);
-    const [isSubmit, setIsSubmit] = useState(false)
-    const emailReg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const [value, setValues] = useState({
-        user_name: '',
-        email: '',
-        password: ""
-    })
     const {
         users
     } = pageProps
@@ -35,28 +27,6 @@ const User = (pageProps) => {
         setLoading(false)
     }, [users])
 
-    const handleChange = (e) => {
-        setValues({
-            ...value,
-            [e.target.name]: e.target.value
-        })
-    }
-
-    const onSubmit = async () => {
-        setIsSubmit(true)
-        const res = await axios.post(`http://localhost:3000/api/user`, value);
-        if (res.status === 200) {
-            setValues({
-                user_name: '',
-                email: '',
-                password: ''
-            })
-            setIsSubmit(false)
-            refreshData();
-        } else {
-            setIsSubmit(false)
-        }
-    }
 
     const handleDelete = async (id) => {
         const res = await axios.delete(`http://localhost:3000/api/user/${id}`);
@@ -97,61 +67,7 @@ const User = (pageProps) => {
                             )) : <p> No Data </p>
                         }
                     </div>
-                    <div className={styles.userForm}>
-                        <div className="input-group">
-                            <div className="input-box">
-                                <input
-                                    onChange={(e) => handleChange(e)}
-                                    type="text"
-                                    name="user_name"
-                                    value={value.user_name}
-                                    ref={register({required: true})}
-                                    placeholder="user_name"/>
-                            </div>
-                            <div className="form-error">
-                                {errors.user_name && "User name is required"}
-                            </div>
-
-                        </div>
-                        <div className="input-group">
-                            <div className="input-box">
-                                <input
-                                    onChange={(e) => handleChange(e)}
-                                    type="text"
-                                    name="email"
-                                    value={value.email}
-                                    ref={register({
-                                        required: true,
-                                        pattern: emailReg
-                                    })}
-                                    placeholder="email"/>
-                            </div>
-                            <div className="form-error">
-                                {errors.email && "Email is required"}
-                            </div>
-                        </div>
-                        <div className="input-group">
-                            <div className="input-box">
-                                <input
-                                    onChange={(e) => handleChange(e)}
-                                    type="password"
-                                    name="password"
-                                    value={value.password}
-                                    ref={register({
-                                        required: true
-                                    })}
-                                    placeholder="password"/>
-                            </div>
-                            <div className="form-error capitalize">
-                                {errors.password && "password is required"}
-                            </div>
-                        </div>
-                        <div className="input-group flex flex-centered">
-                            <div className="btn primary text-center" onClick={handleSubmit(onSubmit)}>
-                                {isSubmit ? <DataLoading/> : "Save"}
-                            </div>
-                        </div>
-                    </div>
+                    <Register/>
                 </section>
             </div>
         </Layout>

@@ -30,6 +30,7 @@ export default async (req, res) => {
                 const user = await User.create(
                     userData
                 );
+                console.log(user)
                 res.status(200).json({
                     success: true,
                     data: user
