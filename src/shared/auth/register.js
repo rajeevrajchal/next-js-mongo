@@ -30,7 +30,7 @@ const Register = () => {
     }
     const onSubmit = async () => {
         setIsSubmit(true)
-        const res = await axios.post(`https://demonextapp.herokuapp.com:3000/api/user`, value);
+        const res = await axios.post(`https://demonextapp.herokuapp.com/api/user`, value);
         if (res.status === 200) {
             setValues({
                 user_name: '',
