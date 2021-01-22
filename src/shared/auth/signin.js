@@ -28,7 +28,7 @@ const SignIn = () => {
 
     const onSignUp = async () => {
         setIsLogin(true)
-        const login = await axios.post(`https://demonextapp.herokuapp.com:3000/api/user`, value)
+        const login = await axios.post(`https://demonextapp.herokuapp.com/api/user`, value)
         if (login.status === 200) {
             Cookies.set('token', login.data.token);
             await localStorage.setItem("loginUser", JSON.stringify(login.data.user))
